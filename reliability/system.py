@@ -28,16 +28,16 @@ class Scheme:
 
 
 class System:
-    LFRS = Callable[[tuple[bool, ...]], bool]
+    StructureFunction = Callable[[tuple[bool, ...]], bool]
 
     _parts: tuple[Part]
     _scheme: Scheme
-    __is_working: LFRS
+    __is_working: StructureFunction
 
-    def __init__(self, parts: tuple[Part], scheme: Scheme, lfrs: LFRS):
+    def __init__(self, parts: tuple[Part], scheme: Scheme, structure_function: StructureFunction):
         self._parts = parts
         self._scheme = scheme
-        self.__is_working = lfrs
+        self.__is_working = structure_function
 
     @property
     def parts(self):
