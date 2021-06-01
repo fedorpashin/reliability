@@ -1,6 +1,6 @@
 from .parts import *
 
-from typing import Optional, Callable
+from typing import Optional, Protocol
 from dataclasses import dataclass
 
 import statistical_modeling as sm
@@ -27,9 +27,11 @@ class Scheme:
         return self._values
 
 
-class System:
-    StructureFunction = Callable[[tuple[bool, ...]], bool]
+class StructureFunction(Protocol):
+    def __call__(self, __origin: tuple[bool, ...]) -> bool: ...
 
+
+class System:
     _parts: tuple[Part]
     _scheme: Scheme
     __is_working: StructureFunction
@@ -61,9 +63,9 @@ class System:
             t: list[float] = list(np.zeros(self.n))
             for part in self._parts:
                 distribution = sm.ExponentialDistribution(1 / part.λ)
-                part_t = [distribution.generate() for _ in self._scheme[part]]
+                part_t = [distribution.value() for _ in self._scheme[part]]
                 for position in range(kit[part]):
-                    part_t[part_t.index(min(part_t))] += distribution.generate()
+                    part_t[part_t.index(min(part_t))] += distribution.value()
                 for i, position in enumerate(self._scheme[part]):
                     t[position] = part_t[i]
             if not self.__is_working(tuple(t_i > T for t_i in t)):
