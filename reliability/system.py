@@ -1,4 +1,4 @@
-from .parts import *
+from .parts import Part, Kit
 
 from typing import Optional, Protocol
 from dataclasses import dataclass
