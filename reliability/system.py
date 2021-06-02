@@ -3,7 +3,7 @@ from .parts import Part, Kit
 from typing import Optional, Protocol
 from dataclasses import dataclass
 
-import statistical_modeling as sm
+from numpy import random
 import scipy.stats
 import itertools
 
@@ -62,10 +62,9 @@ class System:
         for _ in range(N):
             t: list[float] = list(np.zeros(self.n))
             for part in self._parts:
-                distribution = sm.ExponentialDistribution(1 / part.λ)
-                part_t = [distribution.value() for _ in self._scheme[part]]
+                part_t = [random.exponential(1 / part.λ) for _ in self._scheme[part]]
                 for position in range(kit[part]):
-                    part_t[part_t.index(min(part_t))] += distribution.value()
+                    part_t[part_t.index(min(part_t))] += random.exponential(1 / part.λ)
                 for i, position in enumerate(self._scheme[part]):
                     t[position] = part_t[i]
             if not self.__is_working(tuple(t_i > T for t_i in t)):
