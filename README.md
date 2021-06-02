@@ -1,4 +1,4 @@
-Reliability is a Python package that provides reliability calculations for systems using statistical modeling.
+**reliability** is a Python package that provides reliability calculations for systems using statistical modeling.
 
 ## Example
 
