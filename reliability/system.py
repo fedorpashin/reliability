@@ -32,11 +32,11 @@ class StructureFunction(Protocol):
 
 
 class System:
-    _parts: tuple[Part]
+    _parts: tuple[Part, ...]
     _scheme: Scheme
     __is_working: StructureFunction
 
-    def __init__(self, parts: tuple[Part], scheme: Scheme, structure_function: StructureFunction):
+    def __init__(self, parts: tuple[Part, ...], scheme: Scheme, structure_function: StructureFunction):
         self._parts = parts
         self._scheme = scheme
         self.__is_working = structure_function
