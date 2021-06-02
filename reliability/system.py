@@ -37,6 +37,11 @@ class System:
     __is_working: StructureFunction
 
     def __init__(self, parts: tuple[Part, ...], scheme: Scheme, structure_function: StructureFunction):
+        """
+        :param parts: types of parts
+        :param scheme: allocation of parts in scheme
+        :param structure_function: structure function
+        """
         self._parts = parts
         self._scheme = scheme
         self.__is_working = structure_function
@@ -54,6 +59,12 @@ class System:
         return sum([len(self._scheme[part]) for part in self._parts])
 
     def reliability_for(self, kit: Kit, T: int, α: float) -> float:
+        """
+        :param kit: kit for simulation
+        :param T: simulation time
+        :param α: accuracy
+        :return: probability of survival
+        """
         assert 0 <= α <= 1
         assert T > 0
         ε = 1 - α
@@ -72,6 +83,13 @@ class System:
         return 1 - d / N
 
     def possible_kits_for(self, P0: float, T: int, α: float, threshold: dict[Part, int]) -> list[Kit]:
+        """
+        :param P0: required probability
+        :param T: simulation time
+        :param α: accuracy
+        :param threshold: threshold quantity for simulation
+        :return: list of kits
+        """
         assert 0 <= P0 <= 1
         result = []
         list_of_tuples = itertools.product(*([range(1, threshold[part] + 1) for part in self._parts]))
@@ -82,6 +100,13 @@ class System:
         return result
 
     def min_possible_kit_for(self, P0: float, T: int, α: float, threshold: dict[Part, int]) -> Optional[Kit]:
+        """
+        :param P0: required probability
+        :param T: simulation time
+        :param α: accuracy
+        :param threshold: threshold quantity for simulation
+        :return: kit if there is one, None otherwise
+        """
         kits = self.possible_kits_for(P0, T, α, threshold)
         if not kits:
             return None
