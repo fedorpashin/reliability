@@ -34,6 +34,7 @@ class SuitableKits(Kits):
     α: float
     threshold: dict[Part, int]
 
+    @property  # type: ignore
     @overrides
     def all(self) -> Iterable[AnyKit]:
         assert 0 <= self.P0 <= 1

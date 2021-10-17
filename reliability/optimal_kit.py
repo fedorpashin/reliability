@@ -1,3 +1,4 @@
+from reliability import AnyKit
 from reliability.system import System
 from reliability.part import Part
 from reliability.suitable_kits import SuitableKits
@@ -32,6 +33,6 @@ class OptimalKit:
     threshold: dict[Part, int]
 
     @cached_property
-    def value(self) -> Optional[dict[Part, int]]:
-        kits = SuitableKits(self.system, self.P0, self.T, self.α, self.threshold).all()
+    def value(self) -> Optional[AnyKit]:
+        kits = SuitableKits(self.system, self.P0, self.T, self.α, self.threshold).all
         return min(kits, key=lambda x: x.n) if kits else None
