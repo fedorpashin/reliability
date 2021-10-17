@@ -56,19 +56,3 @@ class System:
                 d += 1
         return 1 - d / N
 
-    def possible_kits_for(self, P0: float, T: int, α: float, threshold: dict[Part, int]) -> list[Kit]:
-        """
-        :param P0: required probability
-        :param T: simulation time
-        :param α: accuracy
-        :param threshold: threshold quantity for simulation
-        :return: list of kits
-        """
-        assert 0 <= P0 <= 1
-        result = []
-        list_of_tuples = itertools.product(*([range(1, threshold[part] + 1) for part in self.parts]))
-        list_of_kits = [Kit({part: L[i] for i, part in enumerate(self.parts)}) for L in list_of_tuples]
-        for kit in list_of_kits:
-            if self.reliability_for(kit, T, α) > P0:
-                result.append(kit)
-        return result
