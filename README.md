@@ -1,3 +1,12 @@
+# reliability
+
+[![build](https://github.com/fedorpashin/reliability/workflows/build/badge.svg)](https://github.com/fedorpashin/reliability/actions)
+[![Maintainability](https://api.codeclimate.com/v1/badges/0b2912a94e2a66ef70d9/maintainability)](https://codeclimate.com/github/fedorpashin/reliability/maintainability)
+[![MIT license](https://img.shields.io/badge/License-MIT-blue.svg)](https://lbesson.mit-license.org/)
+
+[![EO principles respected here](https://www.elegantobjects.org/badge.svg)](https://www.elegantobjects.org)
+[![Managed By Self XDSD](https://self-xdsd.com/b/mbself.svg)](https://self-xdsd.com/p/fedorpashin/reliability?provider=github)
+
 **reliability** is a Python package that provides reliability calculations for systems using statistical modeling.
 
 ## Example
