@@ -2,6 +2,7 @@ from reliability.scheme import Scheme
 from reliability.part import Part
 from reliability.kit import Kit
 
+from dataclasses import dataclass
 from typing import Optional, Protocol
 
 import numpy as np
@@ -18,32 +19,15 @@ class StructureFunction(Protocol):
     def __call__(self, __origin: tuple[bool, ...]) -> bool: ...  # noqa: E704
 
 
+@dataclass(frozen=True)
 class System:
-    __parts: tuple[Part, ...]
-    __scheme: Scheme
-    __is_working: StructureFunction
-
-    def __init__(self, parts: tuple[Part, ...], scheme: Scheme, structure_function: StructureFunction):
-        """
-        :param parts: types of parts
-        :param scheme: allocation of parts in scheme
-        :param structure_function: structure function
-        """
-        self.__parts = parts
-        self.__scheme = scheme
-        self.__is_working = structure_function
-
-    @property
-    def parts(self):
-        return self.__parts
-
-    @property
-    def scheme(self):
-        return self.__scheme
+    parts: tuple[Part, ...]
+    scheme: Scheme
+    is_working: StructureFunction
 
     @cached_property
     def n(self):
-        return sum([len(self.__scheme[part]) for part in self.__parts])
+        return sum([len(self.scheme[part]) for part in self.parts])
 
     def reliability_for(self, kit: Kit, T: int, α: float) -> float:
         """
@@ -59,13 +43,13 @@ class System:
         d = 0
         for _ in range(N):
             t: list[float] = list(np.zeros(self.n))
-            for part in self.__parts:
-                part_t = [random.exponential(1 / part.λ) for _ in self.__scheme[part]]
+            for part in self.parts:
+                part_t = [random.exponential(1 / part.λ) for _ in self.scheme[part]]
                 for position in range(kit[part]):
                     part_t[part_t.index(min(part_t))] += random.exponential(1 / part.λ)
-                for i, position in enumerate(self.__scheme[part]):
+                for i, position in enumerate(self.scheme[part]):
                     t[position] = part_t[i]
-            if not self.__is_working(tuple(t_i > T for t_i in t)):
+            if not self.is_working(tuple(t_i > T for t_i in t)):
                 d += 1
         return 1 - d / N
 
@@ -79,8 +63,8 @@ class System:
         """
         assert 0 <= P0 <= 1
         result = []
-        list_of_tuples = itertools.product(*([range(1, threshold[part] + 1) for part in self.__parts]))
-        list_of_kits = [Kit({part: L[i] for i, part in enumerate(self.__parts)}) for L in list_of_tuples]
+        list_of_tuples = itertools.product(*([range(1, threshold[part] + 1) for part in self.parts]))
+        list_of_kits = [Kit({part: L[i] for i, part in enumerate(self.parts)}) for L in list_of_tuples]
         for kit in list_of_kits:
             if self.reliability_for(kit, T, α) > P0:
                 result.append(kit)
