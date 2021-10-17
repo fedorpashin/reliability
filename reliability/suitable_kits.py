@@ -5,6 +5,7 @@ from reliability.system import System
 from reliability.part import Part
 from reliability.any_kit import AnyKit
 from reliability.kit import Kit
+from reliability.reliability import Reliability
 
 from dataclasses import dataclass
 from typing import Iterable
@@ -38,6 +39,6 @@ class SuitableKits(Kits):
         list_of_tuples = itertools.product(*([range(1, self.threshold[part] + 1) for part in self.system.parts]))
         list_of_kits = [Kit({part: L[i] for i, part in enumerate(self.system.parts)}) for L in list_of_tuples]
         for kit in list_of_kits:
-            if self.system.reliability_for(kit, self.T, self.α) > self.P0:
+            if Reliability(self.system, kit, self.T, self.α) > self.P0:
                 result.append(kit)
         return result
