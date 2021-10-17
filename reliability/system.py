@@ -6,7 +6,7 @@ from typing import Optional, Protocol
 
 import numpy as np
 from numpy import random
-import scipy.stats
+import scipy.stats  # type: ignore
 import itertools
 
 from functools import cached_property
@@ -15,7 +15,7 @@ __all__ = ['System']
 
 
 class StructureFunction(Protocol):
-    def __call__(self, __origin: tuple[bool, ...]) -> bool: ...
+    def __call__(self, __origin: tuple[bool, ...]) -> bool: ...  # noqa: E704
 
 
 class System:
