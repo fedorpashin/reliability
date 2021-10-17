@@ -19,8 +19,8 @@ class StructureFunction(Protocol):
 
 
 class System:
-    _parts: tuple[Part, ...]
-    _scheme: Scheme
+    __parts: tuple[Part, ...]
+    __scheme: Scheme
     __is_working: StructureFunction
 
     def __init__(self, parts: tuple[Part, ...], scheme: Scheme, structure_function: StructureFunction):
@@ -29,21 +29,21 @@ class System:
         :param scheme: allocation of parts in scheme
         :param structure_function: structure function
         """
-        self._parts = parts
-        self._scheme = scheme
+        self.__parts = parts
+        self.__scheme = scheme
         self.__is_working = structure_function
 
     @property
     def parts(self):
-        return self._parts
+        return self.__parts
 
     @property
     def scheme(self):
-        return self._scheme
+        return self.__scheme
 
     @cached_property
     def n(self):
-        return sum([len(self._scheme[part]) for part in self._parts])
+        return sum([len(self.__scheme[part]) for part in self.__parts])
 
     def reliability_for(self, kit: Kit, T: int, α: float) -> float:
         """
@@ -59,11 +59,11 @@ class System:
         d = 0
         for _ in range(N):
             t: list[float] = list(np.zeros(self.n))
-            for part in self._parts:
-                part_t = [random.exponential(1 / part.λ) for _ in self._scheme[part]]
+            for part in self.__parts:
+                part_t = [random.exponential(1 / part.λ) for _ in self.__scheme[part]]
                 for position in range(kit[part]):
                     part_t[part_t.index(min(part_t))] += random.exponential(1 / part.λ)
-                for i, position in enumerate(self._scheme[part]):
+                for i, position in enumerate(self.__scheme[part]):
                     t[position] = part_t[i]
             if not self.__is_working(tuple(t_i > T for t_i in t)):
                 d += 1
@@ -79,8 +79,8 @@ class System:
         """
         assert 0 <= P0 <= 1
         result = []
-        list_of_tuples = itertools.product(*([range(1, threshold[part] + 1) for part in self._parts]))
-        list_of_kits = [Kit({part: L[i] for i, part in enumerate(self._parts)}) for L in list_of_tuples]
+        list_of_tuples = itertools.product(*([range(1, threshold[part] + 1) for part in self.__parts]))
+        list_of_kits = [Kit({part: L[i] for i, part in enumerate(self.__parts)}) for L in list_of_tuples]
         for kit in list_of_kits:
             if self.reliability_for(kit, T, α) > P0:
                 result.append(kit)

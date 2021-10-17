@@ -9,15 +9,15 @@ __all__ = ['Kit']
 
 @dataclass(frozen=True)
 class Kit:
-    _values: dict[Part, int]
+    __values: dict[Part, int]
 
     def __getitem__(self, key):
-        return self._values[key]
+        return self.__values[key]
 
     @property
     def values(self):
-        return self._values
+        return self.__values
 
     @cached_property
     def n(self):
-        return sum([value for _, value in self._values.items()])
+        return sum([value for _, value in self.__values.items()])
