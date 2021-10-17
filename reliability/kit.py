@@ -11,5 +11,5 @@ class Kit(AnyKit):
     __values: dict[Part, int]
 
     @property
-    def values(self):
+    def values(self) -> dict[Part, int]:
         return self.__values

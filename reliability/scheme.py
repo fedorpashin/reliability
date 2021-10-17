@@ -9,9 +9,9 @@ __all__ = ['Scheme']
 class Scheme:
     __values: dict[Part, tuple[int]]
 
-    def __getitem__(self, key):
+    def __getitem__(self, key) -> tuple[int]:
         return self.__values[key]
 
     @property
-    def values(self):
+    def values(self) -> dict[Part, tuple[int]]:
         return self.__values

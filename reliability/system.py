@@ -29,7 +29,7 @@ class System:
         return self.structure_function(__origin)
 
     @cached_property
-    def n(self):
+    def n(self) -> int:
         return sum([len(self.scheme[part]) for part in self.parts])
 
     def reliability_for(self, kit: Kit, T: int, α: float) -> float:
