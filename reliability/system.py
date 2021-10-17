@@ -72,17 +72,3 @@ class System:
             if self.reliability_for(kit, T, α) > P0:
                 result.append(kit)
         return result
-
-    def min_possible_kit_for(self, P0: float, T: int, α: float, threshold: dict[Part, int]) -> Optional[Kit]:
-        """
-        :param P0: required probability
-        :param T: simulation time
-        :param α: accuracy
-        :param threshold: threshold quantity for simulation
-        :return: kit if there is one, None otherwise
-        """
-        kits = self.possible_kits_for(P0, T, α, threshold)
-        if not kits:
-            return None
-        else:
-            return min(kits, key=lambda x: x.n)
