@@ -1,15 +1,14 @@
-from .parts import Part, Kit
+from reliability.parts import Part, Kit
 
 from typing import Optional, Protocol
 from dataclasses import dataclass
 
+import numpy as np
 from numpy import random
 import scipy.stats
 import itertools
 
 from functools import cached_property
-
-import numpy as np
 
 __all__ = ['Scheme',
            'System']
