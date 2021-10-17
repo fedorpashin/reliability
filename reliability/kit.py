@@ -1,23 +1,17 @@
+from reliability.any_kit import AnyKit
 from reliability.part import Part
 
 from dataclasses import dataclass
-
-from functools import cached_property
+from final_class import final
 
 __all__ = ['Kit']
 
 
+@final
 @dataclass(frozen=True)
-class Kit:
+class Kit(AnyKit):
     __values: dict[Part, int]
 
-    def __getitem__(self, key):
-        return self.__values[key]
-
     @property
-    def values(self):
+    def values(self) -> dict[Part, int]:
         return self.__values
-
-    @cached_property
-    def n(self):
-        return sum([value for _, value in self.__values.items()])
