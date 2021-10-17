@@ -23,7 +23,10 @@ class StructureFunction(Protocol):
 class System:
     parts: tuple[Part, ...]
     scheme: Scheme
-    is_working: StructureFunction
+    structure_function: StructureFunction
+
+    def is_working(self, __origin: tuple[bool, ...]) -> bool:
+        return self.structure_function(__origin)
 
     @cached_property
     def n(self):
