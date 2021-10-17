@@ -1,7 +1,8 @@
-from reliability.parts import Part, Kit
+from reliability.scheme import Scheme
+from reliability.part import Part
+from reliability.kit import Kit
 
 from typing import Optional, Protocol
-from dataclasses import dataclass
 
 import numpy as np
 from numpy import random
@@ -10,20 +11,7 @@ import itertools
 
 from functools import cached_property
 
-__all__ = ['Scheme',
-           'System']
-
-
-@dataclass(frozen=True)
-class Scheme:
-    _values: dict[Part, tuple[int]]
-
-    def __getitem__(self, key):
-        return self._values[key]
-
-    @property
-    def values(self):
-        return self._values
+__all__ = ['System']
 
 
 class StructureFunction(Protocol):

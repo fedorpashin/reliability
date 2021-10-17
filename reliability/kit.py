@@ -1,15 +1,10 @@
+from reliability.part import Part
+
 from dataclasses import dataclass
 
 from functools import cached_property
 
-__all__ = ['Part',
-           'Kit']
-
-
-@dataclass(frozen=True)
-class Part:
-    type_: int
-    λ: float
+__all__ = ['Kit']
 
 
 @dataclass(frozen=True)

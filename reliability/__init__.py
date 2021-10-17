@@ -1,2 +1,4 @@
 from .system import *
-from .parts import *
+from .scheme import *
+from .kit import *
+from .part import *
