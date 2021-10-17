@@ -3,6 +3,7 @@ from reliability.part import Part
 
 from dataclasses import dataclass
 from typing import Protocol
+from final_class import final
 
 from functools import cached_property
 
@@ -13,6 +14,7 @@ class StructureFunction(Protocol):
     def __call__(self, __origin: tuple[bool, ...]) -> bool: ...  # noqa: E704
 
 
+@final
 @dataclass(frozen=True)
 class System:
     parts: tuple[Part, ...]

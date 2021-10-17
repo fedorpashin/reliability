@@ -1,6 +1,8 @@
 from reliability.system import System
 from reliability.kit import Kit
 
+from final_class import final
+
 import numpy as np
 from numpy import random
 import scipy.stats  # type: ignore
@@ -8,6 +10,7 @@ import scipy.stats  # type: ignore
 __all__ = ['Reliability']
 
 
+@final
 class Reliability(float):
     """
     A class used to represent the probability of system survival

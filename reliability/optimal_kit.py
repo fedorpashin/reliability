@@ -4,12 +4,14 @@ from reliability.suitable_kits import SuitableKits
 
 from dataclasses import dataclass
 from typing import Optional
+from final_class import final
 
 from functools import cached_property
 
 __all__ = ['OptimalKit']
 
 
+@final
 @dataclass(frozen=True)
 class OptimalKit:
     """

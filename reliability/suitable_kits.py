@@ -9,11 +9,13 @@ from reliability.reliability import Reliability
 
 from dataclasses import dataclass
 from typing import Iterable
+from final_class import final
 from overrides import overrides
 
 __all__ = ['SuitableKits']
 
 
+@final
 @dataclass(frozen=True)
 class SuitableKits(Kits):
     """
